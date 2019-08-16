@@ -8,5 +8,5 @@ Deep Convolutional Neural Network for Compressive Sensing of Magnetic Resonance 
 
 ## Refs:
  - RefineGAN in TF （https://github.com/tmquan/RefineGAN ) 
- - CSNet in Matconvnet （https://github.com/ngcthuong/CSNet )  
- - RefineGAN in TF （https://github.com/tmquan/RefineGAN )  
+ - Reimplementation of CSNet in Matconvnet （https://github.com/ngcthuong/CSNet )  
+ - CSNet test in Matconvnet （https://github.com/wzhshi/CSNet )  
