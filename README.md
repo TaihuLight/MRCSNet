@@ -1,6 +1,8 @@
 # DRCSNet
 Deep Convolutional Neural Network for Compressive Sensing of Magnetic Resonance Images （CS-MRI）
 
+## Notice: The training code will be published after the paper is accepted.
+
 ## Requirements
  - Python 3.5.x
  - Pytorch 0.4.1
