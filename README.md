@@ -3,6 +3,7 @@ Deep Convolutional Neural Network for Compressive Sensing of Magnetic Resonance 
 
 ## Notice: 
  - The training code will be published after the paper is accepted.
+ - The models (CSNet96_10.pt and CSNet96_30.pt) are trained at the sampling ratios 10% and 30% using an NVIDIA 1080Ti GPU. 
 
 ## Requirements
  - Python 3.5.x
