@@ -24,29 +24,8 @@ def createDir(imgn,dirname,CS_ratio):
     else:
         return img_rec_path
     
-# 输入参数：未正则化的image数据[0,255]
-def psnrISTA(img_rec, img_orig):
-    img_rec=img_rec.astype(np.float32)
-    img_orig=img_orig.astype(np.float32)
-    mse = np.mean((img_rec - img_orig) ** 2)
-    if mse == 0:
-        return 100
-    PIXEL_MAX = 255.0
-    return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
 
-# 输入参数：正则化后的image数据[0,255]/255.0
-def psnr(recovered, original):
-    recovered=recovered.astype(np.float32)
-    original=original.astype(np.float32)    
-    recovered = torch.from_numpy(recovered)
-    original = torch.from_numpy(original)
-    
-    mse = F.mse_loss(recovered, original)
-    if mse == 0:
-        return 100
-    psnr = 10 * np.log10(1 / mse.item())
-    return psnr
- 
+
 # 输入参数：未来正则化的image数据[0,255]
 # https://github.com/hvcl/RefineGAN
 def psnr_RefineGAN(prediction, ground_truth, maxp=255.):
@@ -100,7 +79,6 @@ def CSNetRGBRec(model, img_padding, device, img_orig, channels_Num):
             img_recch = img_recch.cpu().numpy()
             # 必须使用np.clip()函数防止最大值超过255导致高亮区域图像像素显示错误
             RGB_rec = np.clip(img_recch[:row, :col], 0, 255).astype(np.uint8)  # must be converted into np.uint8 then show correct images
-#             rec_PSNR = psnr(RGB_rec/255.0, img_orig/255.0)
             rec_PSNR = psnr_RefineGAN(RGB_rec, img_orig)
             nrmse_val = compute_NRMSE(RGB_rec, img_orig)
             
@@ -121,7 +99,7 @@ def CSNetRGBRec(model, img_padding, device, img_orig, channels_Num):
                 imgf_x = np.clip(img_recch[:row, :col], 0, 255).astype(np.uint8)
                 imgrec_x = Image.fromarray(imgf_x)
                 RGB_rec.append(imgrec_x)                 
-                rec_PSNR = rec_PSNR + psnr(imgf_x/255.0, img_orig[:,:,channel_no]/255.0)
+                rec_PSNR = rec_PSNR + psnr_RefineGAN(imgf_x, img_orig[:,:,channel_no])
                 nrmse_val = compute_NRMSE(imgf_x, img_orig[:,:,channel_no])
                 
                 img_rect = torch.from_numpy(imgf_x.astype(np.float32))
